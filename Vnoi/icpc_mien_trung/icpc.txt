@@ -1,0 +1,247 @@
+#include<bits/stdc++.h>
+#define fi  first
+#define se  second
+#define int long long
+#define ii  pair<int,int>
+#define iii pair<int,ii>
+#define pb push_back
+#define endl "\n"
+#define debug(x) cerr<<#x<<'='<<(x)<<endl;
+#define debugp(x) cerr<<#x<<"= {"<<(x.first)<<", "<<(x.second)<<"}"<<endl;
+#define debug2(x, y) cerr<<"{"<<#x<<", "<<#y<<"} = {"<<(x)<<", "<<(y)<<"}"<<endl;
+#define debugv(v) {cerr<<#v<<" : ";for (auto x:v) cerr<<x<<' ';cerr<<endl;}
+using namespace std;
+//  sort(v.begin(), v.end(), greater<int>());
+void invector( vector< int > p ){
+    cout<<" in p : ";
+    for(auto x : p ){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+}
+/*
+const int mod = 1e9 + 7 ;
+const int N = 1e5 + 10  ;
+int fac[N];
+int inv[N];
+int power1( int a , int  b){
+    if( b == 0  ) return 1 ;
+    int c=  b /2 ;
+    c = power1( a , c ) % mod ;
+    c = ( c * c ) % mod   ;
+    if( b % 2 == 1 ) c = (  c  * a )%mod;
+    return c ;
+}
+void init(int n){
+	fac[0]=1;
+	for(int i=1;i<=n;++i)
+		fac[i]=1ll*fac[i-1]*i%mod;
+	inv[n]=power1(fac[n],mod-2);
+	for(int i=n-1;i>=0;--i)
+		inv[i]=1ll*inv[i+1]*(i+1)%mod;
+} */
+int gcd(int a,int b)
+{
+	if (b==0) return a;
+	return gcd(b,a%b);
+}
+int xuli( int a , int b , int c , int u ){
+    int h = a/ u ;
+    return h * b * c ;
+}
+void solve(){
+    int a , b , c  , u ; cin>>a>>b>>c>>u  ;
+    if( a < u || b < u || c < u  ){
+        cout<<0<<endl;
+        return ;
+    }
+    int ans = xuli( a , b , c , u ) ;
+    ans = max( ans , xuli( b , a , c , u ) ) ;
+    ans = max( ans , xuli( c , a , b , u ) ) ;
+    cout<<ans<<endl;
+}
+signed main(){
+        srand(time(NULL));ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    int t;cin>>t;
+    while(t--){
+        solve();
+    }
+}
+#include<bits/stdc++.h>
+#define fi  first
+#define se  second
+#define int long long
+#define ii  pair<int,int>
+#define iii pair<int,ii>
+#define pb push_back
+#define endl "\n"
+#define debug(x) cerr<<#x<<'='<<(x)<<endl;
+#define debugp(x) cerr<<#x<<"= {"<<(x.first)<<", "<<(x.second)<<"}"<<endl;
+#define debug2(x, y) cerr<<"{"<<#x<<", "<<#y<<"} = {"<<(x)<<", "<<(y)<<"}"<<endl;
+#define debugv(v) {cerr<<#v<<" : ";for (auto x:v) cerr<<x<<' ';cerr<<endl;}
+using namespace std;
+//  sort(v.begin(), v.end(), greater<int>());
+void invector( vector< int > p ){
+    cout<<" in p : ";
+    for(auto x : p ){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+}
+/*
+const int mod = 1e9 + 7 ;
+const int N = 1e5 + 10  ;
+int fac[N];
+int inv[N];
+int power1( int a , int  b){
+    if( b == 0  ) return 1 ;
+    int c=  b /2 ;
+    c = power1( a , c ) % mod ;
+    c = ( c * c ) % mod   ;
+    if( b % 2 == 1 ) c = (  c  * a )%mod;
+    return c ;
+}
+void init(int n){
+	fac[0]=1;
+	for(int i=1;i<=n;++i)
+		fac[i]=1ll*fac[i-1]*i%mod;
+	inv[n]=power1(fac[n],mod-2);
+	for(int i=n-1;i>=0;--i)
+		inv[i]=1ll*inv[i+1]*(i+1)%mod;
+} */
+int gcd(int a,int b)
+{
+	if (b==0) return a;
+	return gcd(b,a%b);
+}
+map< char , int > ds ;
+vector<int> ans ;
+vector<int> ds1 ;
+signed main(){
+        srand(time(NULL));ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    string s , t ; cin>>s>>t ;
+    int n = s.size() ;
+    for(int i = 0 ; i < t.size() ; i++){
+        ds[ t[i] ]++;
+    }
+    int minb = -1 ;
+    for(auto [x,y] : ds ){
+        ds1.clear() ;
+        if(  y <= 0 ) continue ;
+        for(int i = 0 ; i < n ; i++){
+            if( s[i] == x ){
+                ds1.pb( i ) ;
+            }
+        }
+        if( ds1.size() < y ){
+            cout<<-1<<endl;
+            return 0 ;
+        }
+        int h = ds1.size() - 1 ;
+        int id = h + 1 - y ;
+        while( id >= 1 ){
+            if( ds1[ id - 1 ] > minb ){
+                id-- ;
+            }
+            else{
+                break ;
+            }
+        }
+        for(int i = 0 ; i < y ; i++){
+            ans.pb( ds1[ i + id ]  ) ;
+         //   debug( ds1[i+id] ) ;
+            if( i == y - 1 ){
+                minb = max( minb , ds1[ i + id ] ) ;
+            }
+        }
+    }
+    sort( ans.begin() , ans.end() ) ;
+    for(int i = 0 ; i < ans.size() ; i++ ){
+        cout<<s[ ans[i] ];
+    }
+}
+#include<bits/stdc++.h>
+#define fi  first
+#define se  second
+#define int long long
+#define ii  pair<int,int>
+#define iii pair<int,ii>
+#define pb push_back
+#define endl "\n"
+#define debug(x) cerr<<#x<<'='<<(x)<<endl;
+#define debugp(x) cerr<<#x<<"= {"<<(x.first)<<", "<<(x.second)<<"}"<<endl;
+#define debug2(x, y) cerr<<"{"<<#x<<", "<<#y<<"} = {"<<(x)<<", "<<(y)<<"}"<<endl;
+#define debugv(v) {cerr<<#v<<" : ";for (auto x:v) cerr<<x<<' ';cerr<<endl;}
+using namespace std;
+//  sort(v.begin(), v.end(), greater<int>());
+void invector( vector< int > p ){
+    cout<<" in p : ";
+    for(auto x : p ){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+}
+/*
+const int mod = 1e9 + 7 ;
+const int N = 1e5 + 10  ;
+int fac[N];
+int inv[N];
+int power1( int a , int  b){
+    if( b == 0  ) return 1 ;
+    int c=  b /2 ;
+    c = power1( a , c ) % mod ;
+    c = ( c * c ) % mod   ;
+    if( b % 2 == 1 ) c = (  c  * a )%mod;
+    return c ;
+}
+void init(int n){
+	fac[0]=1;
+	for(int i=1;i<=n;++i)
+		fac[i]=1ll*fac[i-1]*i%mod;
+	inv[n]=power1(fac[n],mod-2);
+	for(int i=n-1;i>=0;--i)
+		inv[i]=1ll*inv[i+1]*(i+1)%mod;
+} */
+int gcd(int a,int b)
+{
+	if (b==0) return a;
+	return gcd(b,a%b);
+}
+vector<int> ds[ 30 ] ;
+int ans ;
+void xuli(int a , int b , int c){
+    int kq = ( b - a ) * ( c - b ) ;
+  //  debug( a ) ; debug(b) ; debug(c) ; debug(kq) ;
+    ans += kq ;
+}
+void solve(){
+    string p ; cin>>p ;
+    ans = 0 ;
+    for(int i = 0 ; i < 30 ; i++ ){
+        ds[i].clear() ;
+        ds[ i ].pb(0) ;
+    }
+    for(int i = 0 ; i < p.size() ; i++){
+        ds[ p[i] - 'a' ].pb( i+1 ) ;
+    }
+    for(int i = 0 ; i < 30 ; i++ ){
+        ds[i].pb( p.size() + 1 ) ;
+    }
+    for(int i = 0 ; i < 30 ; i++){
+        if( ds[i].size() <= 2 ) continue ;
+      //  invector( ds[i] ) ;
+        for(int j = 1 ; j + 1 < ds[i].size() ; j++ ){
+            xuli( ds[i][j-1] , ds[ i ][ j ] , ds[ i ][ j + 1 ] ) ;
+        }
+    }
+    cout<<ans<<endl;
+
+}
+signed main(){
+        srand(time(NULL));ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    int t;cin>>t;
+    while(t--){
+        solve();
+    }
+}
+

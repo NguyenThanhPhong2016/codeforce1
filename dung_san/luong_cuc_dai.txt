@@ -1,0 +1,70 @@
+	
+#include <iostream>
+ 
+using namespace std;
+ 
+#define maxn 1010
+ 
+int n, m, s, t, soluong;
+int a[maxn][maxn], f[maxn][maxn];
+int q[maxn], la[maxn], e[maxn];
+ 
+void tang() {
+	int dt = e[t];
+	soluong += dt;
+	int v = t;
+	while(la[v]!=v) {
+		int u = la[v];
+		if(u<0) {
+			f[v][-u] -= dt;
+			v = -u;
+		}
+		else {
+			f[u][v] += dt;
+			v = u;	
+		}
+	}	
+}
+ 
+bool bfs() {
+	int l, r;
+	q[l=r=0] = s;
+	memset( la, 0, sizeof(la));
+	memset( e, 0, sizeof(e));
+	la[s] = s;
+	e[s] = 1000000000;
+	while(l<=r) {
+		int u = q[l++];
+		for(int v=1;v<=n;++v) if(e[v]==0) {
+			if(a[u][v]>f[u][v]) {
+				e[v] = min( e[u], a[u][v] - f[u][v]);
+				q[++r] = v;
+				la[v] = u;	
+			}	
+			else if(f[v][u]>0) {
+				e[v] = min( e[u], f[v][u]);
+				q[++r] = v;
+				la[v] = -u;	
+			}
+		}	
+		if(e[t]!=0) {
+			tang();
+			return true;
+		}	
+	}
+	return false;
+}
+ 
+int main() {
+	scanf("%d%d%d%d", &n, &m, &s, &t);
+	for(int i=0;i<m;++i) {
+		int u, v, c;
+		scanf("%d%d%d", &u, &v, &c);
+		a[u][v] = c;
+	}
+	while(bfs());
+	cout << soluong << endl;
+	//system("pause");
+	return 0;
+}
+ 
